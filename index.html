@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AXIOM — Sales Deck</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --uv:#7B2FF7;--pk:#FF2D87;--cy:#00E5FF;--yl:#FFD600;--mn:#0D0221;
+  --gp:linear-gradient(135deg,#7B2FF7,#FF2D87,#00E5FF);
+  --ga:linear-gradient(135deg,#7B2FF7,#00E5FF);
+  --gs:linear-gradient(135deg,#FF2D87,#FFD600);
+  --nl:#F4F0FF;--nm:#9B8FC2;--nd:#3A2D5E;
+  --ok:#00E676;--wr:#FFAB00;--er:#FF1744;
+  --fd:'Montserrat',sans-serif;--fb:'Inter',sans-serif;--fm:'JetBrains Mono',monospace;
+}
+html{scroll-behavior:smooth;scroll-snap-type:y mandatory;overflow-y:scroll}
+body{font-family:var(--fb);color:#fff;background:var(--mn)}
+
+/* SLIDES */
+.slide{min-height:100vh;scroll-snap-align:start;display:flex;flex-direction:column;justify-content:center;padding:60px 80px;position:relative;overflow:hidden}
+.slide.dark{background:var(--mn)}
+.slide.light{background:#fff;color:var(--mn)}
+.slide.tinted{background:var(--nl);color:var(--mn)}
+.slide.gradient{background:var(--gp)}
+.slide.violet{background:var(--uv)}
+
+/* NAV DOTS */
+.nav-dots{position:fixed;right:24px;top:50%;transform:translateY(-50%);z-index:100;display:flex;flex-direction:column;gap:8px}
+.nav-dots a{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,0.25);display:block;transition:all .3s}
+.nav-dots a:hover,.nav-dots a.active{background:var(--uv);transform:scale(1.3)}
+.slide.light~.nav-dots a,.slide.tinted~.nav-dots a{background:rgba(0,0,0,0.15)}
+
+/* TYPOGRAPHY */
+h1{font-family:var(--fd);font-weight:800;font-size:clamp(36px,5vw,64px);line-height:1.1}
+h2{font-family:var(--fd);font-weight:700;font-size:clamp(28px,3.5vw,48px);line-height:1.15;margin-bottom:16px}
+h3{font-family:var(--fd);font-weight:700;font-size:clamp(20px,2.5vw,32px);line-height:1.2;margin-bottom:12px}
+h4{font-family:var(--fd);font-weight:600;font-size:18px;margin-bottom:8px}
+p{line-height:1.7}
+.gradient-text{background:var(--gp);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.sunset-text{background:var(--gs);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.mono{font-family:var(--fm)}
+.sub{font-size:18px;color:var(--nm);max-width:700px;line-height:1.7}
+.sub-light{font-size:18px;color:rgba(255,255,255,0.7);max-width:700px;line-height:1.7}
+.tag{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:20px;display:block}
+
+/* STAT BLOCKS */
+.stats{display:flex;gap:40px;flex-wrap:wrap;margin-top:40px}
+.stat-num{font-family:var(--fm);font-weight:600;font-size:clamp(32px,4vw,56px)}
+.stat-label{font-size:13px;color:var(--nm);margin-top:4px}
+
+/* GRIDS */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+
+/* CARDS */
+.card{background:rgba(123,47,247,0.06);border:1px solid rgba(123,47,247,0.15);border-radius:16px;padding:32px;transition:transform .2s}
+.card:hover{transform:translateY(-3px)}
+.card-light{background:#fff;border:1px solid #E8E2F8;border-radius:16px;padding:32px;box-shadow:0 2px 12px rgba(123,47,247,0.06)}
+.card-dark{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:16px;padding:32px}
+
+/* PIPELINE */
+.pipeline{display:flex;align-items:stretch;gap:0;margin:32px 0}
+.pipe-step{flex:1;position:relative;padding:0 4px}
+.pipe-box{background:rgba(123,47,247,0.06);border:1px solid rgba(123,47,247,0.15);border-radius:14px;padding:24px 16px;text-align:center;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.pipe-box.highlight{border-color:var(--ok);background:rgba(0,230,118,0.06)}
+.pipe-arrow{position:absolute;right:-10px;top:50%;transform:translateY(-50%);color:var(--uv);font-size:16px;z-index:2;font-weight:bold}
+.pipe-icon{font-size:28px;margin-bottom:10px}
+.pipe-name{font-family:var(--fd);font-weight:700;font-size:14px;margin-bottom:4px}
+.pipe-desc{font-size:12px;color:var(--nm)}
+.pipe-cost{font-family:var(--fm);font-size:12px;color:var(--cy);margin-top:8px}
+
+/* TABLE */
+.tbl{width:100%;border-collapse:collapse;font-size:14px;margin:24px 0}
+.tbl th{padding:14px 16px;text-align:left;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--nm);border-bottom:2px solid rgba(123,47,247,0.2);white-space:nowrap}
+.tbl td{padding:12px 16px;border-bottom:1px solid rgba(123,47,247,0.08)}
+.tbl tr:hover{background:rgba(123,47,247,0.03)}
+.hi{font-weight:600}.hv{color:var(--uv);font-weight:700}.hg{color:var(--ok);font-weight:600}
+
+/* SERVICE CARDS */
+.svc{border-radius:16px;padding:32px;border:1px solid rgba(123,47,247,0.12);position:relative;overflow:hidden;background:#fff}
+.svc::before{content:'';position:absolute;top:0;left:0;right:0;height:4px}
+.svc.s1::before{background:var(--gp)}
+.svc.s2::before{background:var(--ga)}
+.svc.s3::before{background:linear-gradient(135deg,var(--cy),var(--uv))}
+.svc.s4::before{background:var(--gs)}
+.svc.s5::before{background:linear-gradient(135deg,var(--pk),var(--uv))}
+.svc.s6::before{background:linear-gradient(135deg,var(--yl),var(--cy))}
+.svc h4{color:var(--mn);font-size:16px}
+.svc p{color:var(--nd);font-size:13px;line-height:1.6}
+.svc .svc-tag{font-family:var(--fm);font-size:11px;color:var(--uv);margin-top:12px;display:block}
+
+/* BUTTONS */
+.btn{font-family:var(--fd);font-weight:700;font-size:14px;padding:14px 36px;border-radius:50px;border:none;cursor:pointer;transition:transform .15s,box-shadow .2s;display:inline-block;text-decoration:none}
+.btn:hover{transform:translateY(-2px)}
+.btn-primary{background:var(--gp);color:#fff;box-shadow:0 4px 20px rgba(123,47,247,0.3)}
+.btn-outline{background:transparent;color:#fff;border:2px solid rgba(255,255,255,0.3)}
+
+/* GLOWING ORBS */
+.orb{position:absolute;border-radius:50%;pointer-events:none}
+.orb-1{top:-150px;right:-100px;width:500px;height:500px;background:radial-gradient(circle,rgba(123,47,247,0.25),transparent 70%)}
+.orb-2{bottom:-120px;left:-80px;width:400px;height:400px;background:radial-gradient(circle,rgba(0,229,255,0.15),transparent 70%)}
+.orb-3{top:20%;left:-100px;width:350px;height:350px;background:radial-gradient(circle,rgba(255,45,135,0.12),transparent 70%)}
+
+/* TEAM */
+.team-card{text-align:center;padding:32px}
+.team-avatar{width:100px;height:100px;border-radius:50%;margin:0 auto 16px;display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-weight:800;font-size:2rem;color:#fff}
+.team-name{font-family:var(--fd);font-weight:700;font-size:18px;margin-bottom:4px}
+.team-role{font-size:14px;color:var(--cy);font-family:var(--fd);font-weight:600;margin-bottom:12px}
+.team-stat{font-family:var(--fm);font-size:12px;color:var(--nm);padding:4px 0}
+
+/* BEFORE/AFTER */
+.ba{display:grid;grid-template-columns:1fr auto 1fr;gap:24px;align-items:center;margin:32px 0}
+.ba-col{padding:28px;border-radius:16px}
+.ba-before{background:rgba(255,23,68,0.08);border:1px solid rgba(255,23,68,0.2)}
+.ba-after{background:rgba(0,230,118,0.08);border:1px solid rgba(0,230,118,0.2)}
+.ba-arrow{font-size:32px;color:var(--uv)}
+.ba-label{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px}
+
+/* PRICING TIERS */
+.tier{background:#fff;border:1px solid #E8E2F8;border-radius:16px;padding:28px;text-align:center;position:relative}
+.tier.featured{border-color:var(--uv);box-shadow:0 4px 24px rgba(123,47,247,0.15)}
+.tier.featured::before{content:'MOST POPULAR';position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--gp);color:#fff;font-size:10px;font-weight:800;padding:4px 16px;border-radius:20px;letter-spacing:1px}
+.tier-name{font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--nm);margin-bottom:4px}
+.tier-price{font-family:var(--fm);font-size:32px;font-weight:600;color:var(--mn);margin-bottom:4px}
+.tier-unit{font-size:13px;color:var(--nm);margin-bottom:16px}
+.tier ul{list-style:none;text-align:left;margin-top:16px}
+.tier li{font-size:13px;color:var(--nd);padding:6px 0 6px 20px;position:relative}
+.tier li::before{content:'';position:absolute;left:0;top:12px;width:10px;height:2px;background:var(--uv);border-radius:1px}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .slide{padding:40px 24px}
+  .g2,.g3,.g4{grid-template-columns:1fr}
+  .pipeline{flex-direction:column}.pipe-arrow{display:none}
+  .ba{grid-template-columns:1fr}.ba-arrow{display:none}
+  .stats{gap:20px}
+}
+@media print{.slide{page-break-after:always;min-height:auto;padding:40px}.nav-dots{display:none}}
+</style>
+</head>
+<body>
+
+<!-- NAV DOTS -->
+<div class="nav-dots" id="navDots"></div>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- SLIDE 1: COVER                              -->
+<!-- ════════════════════════════════════════════ -->
+<section class="slide dark" id="s1">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div style="position:relative;z-index:1">
+    <h1 class="gradient-text" style="font-size:clamp(48px,6vw,80px);margin-bottom:16px;">AXIOM</h1>
+    <p style="font-family:var(--fd);font-weight:600;font-size:20px;color:var(--cy);margin-bottom:32px;letter-spacing:2px;">Build. Deploy. Train.</p>
+    <h2 style="font-size:clamp(24px,3vw,40px);color:#fff;max-width:800px;font-weight:700;">AI agents that automate every department in your financial institution.</h2>
+    <p class="sub-light" style="margin-top:16px;">Compliance. Customer Care. Operations. Finance. Marketing.<br>Deployed in 30 days. Your team trained to use them.</p>
+    <div style="margin-top:48px;display:flex;gap:16px;">
+      <a class="btn btn-primary" href="#s4">See How It Works</a>
+      <a class="btn btn-outline" href="#s14">Contact Us</a>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- SLIDE 2: THE PROBLEM                        -->
+<!-- ════════════════════════════════════════════ -->
+<section class="slide dark" id="s2">
+  <div class="orb orb-3"></div>
+  <div style="position:relative;z-index:1;max-width:1000px;">
+    <span class="tag" style="color:var(--pk);">The Problem</span>
+    <h2 style="max-width:800px;">Your competitors are deploying AI.<br>You're still doing it manually.</h2>
+    <p class="sub-light" style="margin-bottom:40px;">86% of financial institutions say AI is a priority. Only 12% have deployed it beyond pilot. The gap isn't technology — it's implementation and people.</p>
+
+    <div class="g4">
+      <div class="card">
+        <div class="stat-num sunset-text">$117B</div>
+        <div class="stat-label">Annual chargeback losses globally</div>
+      </div>
+      <div class="card">
+        <div class="stat-num sunset-text">4-6 days</div>
+        <div class="stat-label">Average manual dispute resolution</div>
+      </div>
+      <div class="card">
+        <div class="stat-num sunset-text">60%+</div>
+        <div class="stat-label">Compliance costs are manual review</div>
+      </div>
+      <div class="card">
+        <div class="stat-num sunset-text">$500K+</div>
+        <div class="stat-label">What Big 4 charges for AI consulting</div>
+      </div>
+    </div>
+
+    <p style="color:rgba(255,255,255,0.5);font-size:14px;margin-top:32px;max-width:700px;">You don't need another consultant with a roadmap. You need AI agents running in production — and a team that knows how to use them.</p>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- SLIDE 3: THE SOLUTION                       -->
+<!-- ════════════════════════════════════════════ -->
+<section class="slide dark" id="s3">
+  <div style="max-width:1000px;">
+    <span class="tag" style="color:var(--cy);">The Solution</span>
+    <h2 style="max-width:800px;">We build AI agents, deploy them into your workflows, and train your entire team.</h2>
+    <p class="sub-light" style="margin-bottom:48px;">Not consulting. Not SaaS you configure yourself. We embed inside your operations and deliver production-ready AI systems — then make sure every person in your organization can use them.</p>
+
+    <div class="g3">
+      <div class="card" style="text-align:center;padding:40px 28px;">
+        <div style="font-size:40px;margin-bottom:16px;">&#x1F528;</div>
+        <h3 class="gradient-text" style="font-size:28px;">Build</h3>
+        <h4 style="color:var(--cy);font-weight:500;">AI Agents & Workflows</h4>
+        <p style="color:var(--nm);font-size:14px;margin-top:12px;">Purpose-built autonomous agents for your specific workflows. Not generic chatbots — agents that reason, decide, and execute.</p>
+      </div>
+      <div class="card" style="text-align:center;padding:40px 28px;">
+        <div style="font-size:40px;margin-bottom:16px;">&#x1F680;</div>
+        <h3 class="gradient-text" style="font-size:28px;">Deploy</h3>
+        <h4 style="color:var(--cy);font-weight:500;">Into Your Systems</h4>
+        <p style="color:var(--nm);font-size:14px;margin-top:12px;">Integrated into your core banking, CRM, and ops stack. Live in production in 30 days — not 12 months.</p>
+      </div>
+      <div class="card" style="text-align:center;padding:40px 28px;">
+        <div style="font-size:40px;margin-bottom:16px;">&#x1F393;</div>
+        <h3 class="gradient-text" style="font-size:28px;">Train</h3>
+        <h4 style="color:var(--cy);font-weight:500;">Every Person</h4>
+        <p style="color:var(--nm);font-size:14px;margin-top:12px;">C-suite workshops. Manager programs. Staff bootcamps. AI is useless if your people can't work with it.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- SLIDE 4: DISPUTE AGENT — THE WEDGE          -->
+<!-- ════════════════════════════════════════════ -->
+<section class="slide tinted" id="s4">
+  <div style="max-width:1000px;">
+    <span class="tag" style="color:var(--uv);">Flagship Product</span>
+    <h2 style="color:var(--mn);">Disputes resolved in 7.2 seconds.<br>Not 4-6 days.</h2>
+    <p style="color:var(--nd);font-size:16px;max-width:700px;margin-bottom:32px;">Our 3-agent pipeline processes chargebacks, Reg E, Reg Z, ACH, and P2P disputes end-to-end. Autonomous. Compliant. Auditable.</p>
+
+    <div class="pipeline">
+      <div class="pipe-step">
+        <div class="pipe-box">
+          <div class="pipe-icon">&#x1F50D;</div>
+          <div class="pipe-name" style="color:var(--mn);">Collector Agent</div>
+          <div class="pipe-desc">Evidence from 15+ sources</div>
+          <div class="pipe-cost">~2.3s | $0.003</div>
+        </div>
+        <div class="pipe-arrow">&#x2192;</div>
+      </div>
+      <div class="pipe-step">
+        <div class="pipe-box">
+          <div class="pipe-icon">&#x1F9E0;</div>
+          <div class="pipe-name" style="color:var(--mn);">Analyst Agent</div>
+          <div class="pipe-desc">Win probability + fraud detection</div>
+          <div class="pipe-cost">~1.8s | $0.005</div>
+        </div>
+        <div class="pipe-arrow">&#x2192;</div>
+      </div>
+      <div class="pipe-step">
+        <div class="pipe-box">
+          <div class="pipe-icon">&#x1F4DD;</div>
+          <div class="pipe-name" style="color:var(--mn);">Representor Agent</div>
+          <div class="pipe-desc">Network-compliant letters</div>
+          <div class="pipe-cost">~3.1s | $0.008</div>
+        </div>
+        <div class="pipe-arrow">&#x2192;</div>
+      </div>
+      <div class="pipe-step">
+        <div class="pipe-box highlight">
+          <div class="pipe-icon">&#x2705;</div>
+          <div class="pipe-name" style="color:var(--mn);">Ready to Submit</div>
+          <div class="pipe-desc">Network-ready package</div>
+          <div class="pipe-cost" style="color:var(--uv);font-weight:600;">7.2s | $0.016 total</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ba">
+      <div class="ba-col ba-before">
+        <div class="ba-label" style="color:var(--er);">Before Axiom</div>
+        <p style="color:var(--mn);font-size:14px;"><strong>4-6 days</strong> per dispute</p>
+        <p style="color:var(--mn);font-size:14px;"><strong>38-42%</strong> win rate</p>
+        <p style="color:var(--mn);font-size:14px;"><strong>$15-25</strong> cost per dispute</p>
+        <p style="color:var(--mn);font-size:14px;"><strong>3-5 FTEs</strong> dedicated</p>
+      </div>
+      <div class="ba-arrow">&#x2192;</div>
+      <div class="ba-col ba-after">
+        <div class="ba-label" style="color:var(--ok);">After Axiom</div>
+        <p style="color:var(--mn);font-size:14px;"><strong style="color:var(--ok)">7.2 seconds</strong> per dispute</p>
+        <p style="color:var(--mn);font-size:14px;"><strong style="color:var(--ok)">80%+</strong> win rate</p>
+        <p style="color:var(--mn);font-size:14px;"><strong style="color:var(--ok)">$0.016</strong> cost per dispute</p>
+        <p style="color:var(--mn);font-size:14px;"><strong style="color:var(--ok)">0 FTEs</strong> — fully autonomous</p>
+      </div>
+    </div>
+
+    <p style="color:var(--nd);font-size:14px;font-style:italic;">Validated on 19,074 real disputes. Human-in-the-loop on low-confidence cases.</p>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- SLIDE 5: SIX SERVICE LINES                  -->
+<!-- ════════════════════════════════════════════ -->
+<section class="slide light" id="s5">
+  <div style="max-width:1100px;">
+    <span class="tag" style="color:var(--uv);">What We Automate</span>
+    <h2 style="color:var(--mn);">Six departments. One partner.</h2>
+    <p style="color:var(--nd);font-size:16px;max-width:700px;margin-bottom:32px;">Start with one. Expand as you see results. Average client goes from 1 to 3+ service lines within 18 months.</p>
+
+    <div class="g3">
+      <div class="svc s1">
+        <div style="font-size:24px;margin-bottom:8px;">&#x1F6E1;</div>
+        <h4>Compliance AI</h4>
+        <p>Dispute resolution, KYC automation, regulatory monitoring, SAR filing, audit preparation.</p>
+        <span class="svc-tag">80%+ win rate | 7.2s per dispute</span>
+      </div>
+      <div class="svc s2">
+        <div style="font-size:24px;margin-bottom:8px;">&#x1F4AC;</div>
+        <h4>Customer Care AI</h4>
+        <p>Intelligent routing, self-service agents, churn prediction, 24/7 multilingual support.</p>
+        <span class="svc-tag">40-60% ticket reduction</span>
+      </div>
+      <div class="svc s3">
+        <div style="font-size:24px;margin-bottom:8px;">&#x2699;&#xFE0F;</div>
+        <h4>Operations AI</h4>
+        <p>KYC onboarding, document processing, reconciliation, vendor management, workflow automation.</p>
+        <span class="svc-tag">Onboarding: 4 weeks → 3 days</span>
+      </div>
+      <div class="svc s4">
+        <div style="font-size:24px;margin-bottom:8px;">&#x1F4B0;</div>
+        <h4>Finance AI</h4>
+        <p>Revenue forecasting, risk scoring, regulatory reporting, treasury management, audit readiness.</p>
+        <span class="svc-tag">70% reporting time reduction</span>
+      </div>
+      <div class="svc s5">
+        <div style="font-size:24px;margin-bottom:8px;">&#x1F4E3;</div>
+        <h4>Marketing AI</h4>
+        <p>Compliant content generation, personalization, campaign optimization, lead scoring, competitive intel.</p>
+        <span class="svc-tag">30-50% CAC reduction</span>
+      </div>
+      <div class="svc s6">
+        <div style="font-size:24px;margin-bottom:8px;">&#x1F393;</div>
+        <h4>AI Training</h4>
+        <p>C-suite workshops, manager programs, staff bootcamps, AI champion certification, ongoing office hours.</p>
+        <span class="svc-tag">100% of your team AI-capable</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- SLIDE 6: HOW WE WORK                        -->
+<!-- ════════════════════════════════════════════ -->
+<section class="slide dark" id="s6">
+  <div class="orb orb-1"></div>
+  <div style="position:relative;z-index:1;max-width:1000px;">
+    <span class="tag" style="color:var(--yl);">How We Work</span>
+    <h2>From kickoff to production in 30 days.</h2>
+    <p class="sub-light" style="margin-bottom:40px;">We don't hand you a roadmap and walk away. We embed inside your operations, build, deploy, and train — then optimize continuously.</p>
+
+    <div style="display:flex;flex-direction:column;gap:20px;">
+      <div style="display:flex;gap:20px;align-items:flex-start;">
+        <div style="width:48px;height:48px;min-width:48px;border-radius:50%;background:var(--gp);display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-weight:800;font-size:18px;color:#fff;">1</div>
+        <div>
+          <h4 style="color:var(--cy);">Discovery & Assessment <span style="font-family:var(--fm);color:var(--nm);font-weight:400;font-size:13px;">— Week 1</span></h4>
+          <p style="color:var(--nm);font-size:14px;">We audit your current workflows, pain points, and systems. Identify the highest-ROI automation opportunities. Deliver a prioritized roadmap.</p>
+        </div>
+      </div>
+      <div style="display:flex;gap:20px;align-items:flex-start;">
+        <div style="width:48px;height:48px;min-width:48px;border-radius:50%;background:var(--gp);display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-weight:800;font-size:18px;color:#fff;">2</div>
+        <div>
+          <h4 style="color:var(--cy);">Build & Integrate <span style="font-family:var(--fm);color:var(--nm);font-weight:400;font-size:13px;">— Weeks 2-3</span></h4>
+          <p style="color:var(--nm);font-size:14px;">We build your custom AI agents, integrate with your core systems (banking, CRM, compliance tools), and configure human-in-the-loop controls.</p>
+        </div>
+      </div>
+      <div style="display:flex;gap:20px;align-items:flex-start;">
+        <div style="width:48px;height:48px;min-width:48px;border-radius:50%;background:var(--gp);display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-weight:800;font-size:18px;color:#fff;">3</div>
+        <div>
+          <h4 style="color:var(--cy);">Deploy & Validate <span style="font-family:var(--fm);color:var(--nm);font-weight:400;font-size:13px;">— Week 4</span></h4>
+          <p style="color:var(--nm);font-size:14px;">Go live in production. Shadow mode first, then gradual autonomy. Validate results against your baseline. Agents processing real work, not demos.</p>
+        </div>
+      </div>
+      <div style="display:flex;gap:20px;align-items:flex-start;">
+        <div style="width:48px;height:48px;min-width:48px;border-radius:50%;background:var(--gp);display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-weight:800;font-size:18px;color:#fff;">4</div>
+        <div>
+          <h4 style="color:var(--cy);">Train Your Team <span style="font-family:var(--fm);color:var(--nm);font-weight:400;font-size:13px;">— Ongoing</span></h4>
+          <p style="color:var(--nm);font-size:14px;">C-suite workshops, manager programs, staff bootcamps. Every person in your organization learns to work with AI — not just the IT team.</p>
+        </div>
+      </div>
+      <div style="display:flex;gap:20px;align-items:flex-start;">
+        <div style="width:48px;height:48px;min-width:48px;border-radius:50%;background:var(--gp);display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-weight:800;font-size:18px;color:#fff;">5</div>
+        <div>
+          <h4 style="color:var(--cy);">Optimize & Expand <span style="font-family:var(--fm);color:var(--nm);font-weight:400;font-size:13px;">— Months 2+</span></h4>
+          <p style="color:var(--nm);font-size:14px;">Continuous improvement. Monthly performance reviews. Expand to new departments as ROI is proven. Most clients add 2+ service lines within the first year.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- SLIDE 7: SAFETY BY DESIGN                   -->
+<!-- ════════════════════════════════════════════ -->
+<section class="slide tinted" id="s7">
+  <div style="max-width:1000px;">
+    <span class="tag" style="color:var(--uv);">Safety & Compliance</span>
+    <h2 style="color:var(--mn);">Three autonomy tiers. Humans stay in control.</h2>
+    <p style="color:var(--nd);font-size:16px;max-width:700px;margin-bottom:40px;">Every agent operates within strict compliance guardrails. You decide how much autonomy each agent gets. Upgrade or downgrade anytime.</p>
+
+    <div class="g3">
+      <div class="card-light" style="text-align:center;border-top:4px solid var(--ok);">
+        <div style="font-size:36px;margin-bottom:12px;">&#x2705;</div>
+        <h4 style="color:var(--ok);font-size:13px;letter-spacing:1px;">TIER 1 — FULL AUTO</h4>
+        <h3 style="color:var(--mn);font-size:20px;">Execute Autonomously</h3>
+        <p style="color:var(--nd);font-size:13px;">Low-risk, high-frequency tasks. Ticket routing, document extraction, content scheduling, expense categorization.</p>
+      </div>
+      <div class="card-light" style="text-align:center;border-top:4px solid var(--wr);">
+        <div style="font-size:36px;margin-bottom:12px;">&#x1F44D;</div>
+        <h4 style="color:var(--wr);font-size:13px;letter-spacing:1px;">TIER 2 — APPROVE & EXECUTE</h4>
+        <h3 style="color:var(--mn);font-size:20px;">Human Approves</h3>
+        <p style="color:var(--nd);font-size:13px;">Agent prepares the action + rationale. Human clicks approve. Regulatory filings, billing changes, client communications.</p>
+      </div>
+      <div class="card-light" style="text-align:center;border-top:4px solid var(--pk);">
+        <div style="font-size:36px;margin-bottom:12px;">&#x1F9D1;&#x200D;&#x1F4BC;</div>
+        <h4 style="color:var(--pk);font-size:13px;letter-spacing:1px;">TIER 3 — ADVISE ONLY</h4>
+        <h3 style="color:var(--mn);font-size:20px;">Human Decides</h3>
+        <p style="color:var(--nd);font-size:13px;">Agent provides analysis + recommendation. Human makes the call. Pricing decisions, risk exceptions, regulatory responses.</p>
+      </div>
+    </div>
+
+    <p style="color:var(--nd);font-size:14px;margin-top:32px;max-width:700px;"><strong style="color:var(--mn);">Built for regulators:</strong> Full audit trails, examiner-ready reports, Reg E/Z timeline validation, and compliance documentation — standard in every deployment.</p>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- SLIDE 8: RESULTS                            -->
+<!-- ════════════════════════════════════════════ -->
+<section class="slide dark" id="s8">
+  <div class="orb orb-2"></div>
+  <div style="position:relative;z-index:1;max-width:1000px;">
+    <span class="tag" style="color:var(--ok);">Proven Results</span>
+    <h2>Numbers that speak for themselves.</h2>
+    <p class="sub-light" style="margin-bottom:48px;">Validated on real disputes. Real financial data. Not a demo — production results.</p>
+
+    <div class="g4">
+      <div class="card" style="text-align:center;padding:36px 20px;">
+        <div class="stat-num" style="background:var(--gs);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">19,074</div>
+        <div class="stat-label">Disputes Validated</div>
+      </div>
+      <div class="card" style="text-align:center;padding:36px 20px;">
+        <div class="stat-num" style="background:var(--gs);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">7.2s</div>
+        <div class="stat-label">Per Dispute</div>
+      </div>
+      <div class="card" style="text-align:center;padding:36px 20px;">
+        <div class="stat-num" style="background:var(--gs);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">80%+</div>
+        <div class="stat-label">Win Rate</div>
+      </div>
+      <div class="card" style="text-align:center;padding:36px 20px;">
+        <div class="stat-num" style="background:var(--gs);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">$0.016</div>
+        <div class="stat-label">Cost Per Dispute</div>
+      </div>
+    </div>
+
+    <div class="g3" style="margin-top:24px;">
+      <div class="card" style="text-align:center;">
+        <div style="font-family:var(--fm);font-size:24px;font-weight:600;color:var(--cy);">500/hr</div>
+        <div class="stat-label">Disputes processed per hour</div>
+      </div>
+      <div class="card" style="text-align:center;">
+        <div style="font-family:var(--fm);font-size:24px;font-weight:600;color:var(--cy);">99.8%</div>
+        <div class="stat-label">Faster than manual processing</div>
+      </div>
+      <div class="card" style="text-align:center;">
+        <div style="font-family:var(--fm);font-size:24px;font-weight:600;color:var(--cy);">96%</div>
+        <div class="stat-label">Cost reduction vs industry average</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- SLIDE 9: COMPETITIVE                        -->
+<!-- ════════════════════════════════════════════ -->
+<section class="slide light" id="s9">
+  <div style="max-width:1100px;">
+    <span class="tag" style="color:var(--uv);">Why Axiom</span>
+    <h2 style="color:var(--mn);">Nobody does what we do.</h2>
+    <p style="color:var(--nd);font-size:16px;max-width:700px;margin-bottom:24px;">Competitors sell one thing. We deliver the full stack: agents across every department + training for every person.</p>
+
+    <div style="overflow-x:auto;border-radius:16px;border:1px solid #E8E2F8;">
+      <table class="tbl">
+        <thead>
+          <tr><th>Capability</th><th style="color:var(--uv);">Axiom</th><th>Chargeflow / Justt</th><th>Big 4 Consulting</th><th>Generic AI Tools</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="hi">Dispute Resolution</td><td class="hg">Autonomous 3-agent LLM</td><td>Merchant only</td><td>Consulting only</td><td>No</td></tr>
+          <tr><td class="hi">Customer Care Agents</td><td class="hg">Purpose-built</td><td>No</td><td>Generic recommendation</td><td>Generic chatbot</td></tr>
+          <tr><td class="hi">Operations Automation</td><td class="hg">KYC, reconciliation, onboarding</td><td>No</td><td>Yes (expensive)</td><td>Generic workflow</td></tr>
+          <tr><td class="hi">Finance & Risk Agents</td><td class="hg">Reporting, risk scoring</td><td>No</td><td>Yes (expensive)</td><td>Generic analytics</td></tr>
+          <tr><td class="hi">Executive Training</td><td class="hg">C-suite to Staff</td><td>No</td><td>Yes ($500K+)</td><td>No</td></tr>
+          <tr><td class="hi">Issuer + Merchant</td><td class="hg">Both</td><td>Merchant only</td><td>Consulting only</td><td>Neither</td></tr>
+          <tr><td class="hi">LATAM Market</td><td class="hg">Native (bilingual)</td><td>No</td><td>Yes (expensive)</td><td>No</td></tr>
+          <tr><td class="hi">Time to Deploy</td><td class="hg">30 days</td><td>2-4 weeks (disputes only)</td><td>6-12 months</td><td>DIY</td></tr>
+          <tr><td class="hi">Cost</td><td class="hv">$2.5K-200K/mo</td><td>25% of recovered $</td><td style="color:var(--er);">$500K-5M/project</td><td>$20-100/user/mo</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- SLIDE 10: PRICING                           -->
+<!-- ════════════════════════════════════════════ -->
+<section class="slide tinted" id="s10">
+  <div style="max-width:1100px;">
+    <span class="tag" style="color:var(--uv);">Pricing</span>
+    <h2 style="color:var(--mn);">Start where it hurts most. Expand from there.</h2>
+    <p style="color:var(--nd);font-size:16px;max-width:700px;margin-bottom:32px;">Every engagement starts with the service line that has the highest ROI for you. No long-term lock-in. Results speak for themselves.</p>
+
+    <div class="g4">
+      <div class="tier">
+        <div class="tier-name">Starter</div>
+        <div class="tier-price">$2.5K</div>
+        <div class="tier-unit">/month</div>
+        <p style="font-size:13px;color:var(--nd);">1 service line<br>Perfect for pilot programs</p>
+        <ul>
+          <li>1 AI agent deployment</li>
+          <li>Core system integration</li>
+          <li>Monthly performance report</li>
+          <li>Email support</li>
+        </ul>
+      </div>
+      <div class="tier featured">
+        <div class="tier-name">Growth</div>
+        <div class="tier-price">$8K</div>
+        <div class="tier-unit">/month</div>
+        <p style="font-size:13px;color:var(--nd);">2-3 service lines<br>Where most clients start</p>
+        <ul>
+          <li>Multi-agent deployment</li>
+          <li>Full system integration</li>
+          <li>Staff training bootcamp</li>
+          <li>Weekly optimization calls</li>
+          <li>Dedicated success manager</li>
+        </ul>
+      </div>
+      <div class="tier">
+        <div class="tier-name">Scale</div>
+        <div class="tier-price">$30K</div>
+        <div class="tier-unit">/month</div>
+        <p style="font-size:13px;color:var(--nd);">4-5 service lines<br>Full department automation</p>
+        <ul>
+          <li>All agent types available</li>
+          <li>Enterprise integrations</li>
+          <li>C-suite + manager training</li>
+          <li>AI Champion certification</li>
+          <li>Priority support + SLA</li>
+        </ul>
+      </div>
+      <div class="tier">
+        <div class="tier-name">Enterprise</div>
+        <div class="tier-price">Custom</div>
+        <div class="tier-unit">let's talk</div>
+        <p style="font-size:13px;color:var(--nd);">All 6 service lines<br>Full AI transformation</p>
+        <ul>
+          <li>All agents + all training</li>
+          <li>Custom agent development</li>
+          <li>On-site implementation team</li>
+          <li>Quarterly executive reviews</li>
+          <li>SLA + compliance guarantees</li>
+        </ul>
+      </div>
+    </div>
+
+    <p style="color:var(--nd);font-size:14px;margin-top:24px;text-align:center;">Dispute AI also available on <strong>success-fee basis</strong> (15-25% of recovered funds). You only pay when we win.</p>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- SLIDE 10b: COMPETITIVE PRICING              -->
+<!-- ════════════════════════════════════════════ -->
+<section class="slide dark" id="s10b">
+  <div class="orb orb-1"></div>
+  <div style="position:relative;z-index:1;max-width:1100px;">
+    <span class="tag" style="color:var(--pk);">How We Compare</span>
+    <h2>Fraction of the cost. <span class="gradient-text">10x the scope.</span></h2>
+    <p class="sub-light" style="margin-bottom:28px;">See how Axiom stacks up against every alternative &mdash; from point tools to Big 4 consulting.</p>
+
+    <!-- DISPUTE COST COMPARISON -->
+    <h4 style="color:var(--cy);font-size:13px;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:14px;">Cost per Dispute</h4>
+    <div style="overflow-x:auto;border-radius:14px;border:1px solid rgba(123,47,247,0.15);margin-bottom:28px;">
+      <table class="tbl" style="background:rgba(30,20,64,0.6);">
+        <thead><tr><th>Solution</th><th>Pricing Model</th><th>On $100 Dispute</th><th>10K Disputes/mo</th><th>Annual Est.</th></tr></thead>
+        <tbody>
+          <tr style="background:rgba(123,47,247,0.08);">
+            <td class="hi" style="color:var(--uv);">AXIOM</td>
+            <td>SaaS + $0.016/dispute</td>
+            <td class="hg mono">$0.016</td>
+            <td class="hg mono">$2,660</td>
+            <td class="hg mono">~$32K + SaaS</td>
+          </tr>
+          <tr>
+            <td class="hi">Chargeflow</td>
+            <td>25% success fee</td>
+            <td style="color:var(--er);" class="mono">$25.00</td>
+            <td style="color:var(--er);" class="mono">~$163K</td>
+            <td style="color:var(--er);" class="mono">~$1.95M</td>
+          </tr>
+          <tr>
+            <td class="hi">Justt</td>
+            <td>35% success fee</td>
+            <td style="color:var(--er);" class="mono">$35.00</td>
+            <td style="color:var(--er);" class="mono">~$229K</td>
+            <td style="color:var(--er);" class="mono">~$2.75M</td>
+          </tr>
+          <tr>
+            <td class="hi">Ethoca (MC)</td>
+            <td>$20-40/alert</td>
+            <td style="color:var(--wr);" class="mono">$20-40</td>
+            <td style="color:var(--wr);" class="mono">$200-400K</td>
+            <td style="color:var(--wr);" class="mono">$2.4-4.8M</td>
+          </tr>
+          <tr>
+            <td class="hi">In-House (manual)</td>
+            <td>$9-37/dispute</td>
+            <td style="color:var(--er);" class="mono">$9-37</td>
+            <td style="color:var(--er);" class="mono">$90-370K</td>
+            <td style="color:var(--er);" class="mono">$1.1-4.4M</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- CONSULTING COMPARISON -->
+    <h4 style="color:var(--yl);font-size:13px;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:14px;">AI Transformation Cost</h4>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;">
+      <div class="card" style="text-align:center;padding:24px;border-top:3px solid var(--er);">
+        <div style="font-size:12px;color:var(--nm);margin-bottom:4px;">McKinsey / BCG</div>
+        <div style="font-family:var(--fd);font-size:24px;font-weight:800;color:var(--er);">$1M+</div>
+        <div style="font-size:11px;color:var(--nm);margin-top:4px;">Strategy deck only<br>6-18 months</div>
+      </div>
+      <div class="card" style="text-align:center;padding:24px;border-top:3px solid var(--er);">
+        <div style="font-size:12px;color:var(--nm);margin-bottom:4px;">Big 4 (Deloitte, PwC)</div>
+        <div style="font-family:var(--fd);font-size:24px;font-weight:800;color:var(--er);">$500K+</div>
+        <div style="font-size:11px;color:var(--nm);margin-top:4px;">Framework + partial build<br>6-12 months</div>
+      </div>
+      <div class="card" style="text-align:center;padding:24px;border-top:3px solid var(--wr);">
+        <div style="font-size:12px;color:var(--nm);margin-bottom:4px;">NICE Actimize / Sift</div>
+        <div style="font-family:var(--fd);font-size:24px;font-weight:800;color:var(--wr);">$200K+/yr</div>
+        <div style="font-size:11px;color:var(--nm);margin-top:4px;">Fraud only, no disputes<br>No training</div>
+      </div>
+      <div class="card" style="text-align:center;padding:24px;border-top:3px solid var(--ok);">
+        <div style="font-size:12px;color:var(--nm);margin-bottom:4px;">AXIOM</div>
+        <div style="font-family:var(--fd);font-size:24px;font-weight:800;color:var(--ok);">$30K/yr</div>
+        <div style="font-size:11px;color:var(--nm);margin-top:4px;">Deployed agents + training<br>2-8 weeks</div>
+      </div>
+    </div>
+
+    <div style="background:linear-gradient(135deg,rgba(123,47,247,0.1),rgba(255,45,135,0.1));border:1px solid rgba(123,47,247,0.2);border-radius:12px;padding:18px 24px;margin-top:20px;text-align:center;">
+      <p style="font-size:15px;font-weight:600;color:#fff;">Chargeflow raised $35M. Justt raised $100M. Sardine raised $145M. <span style="color:var(--cy);">None of them can train your team, automate your operations, AND resolve your disputes &mdash; starting at $2,500/mo.</span></p>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- SLIDE 11: TRAINING DETAIL                   -->
+<!-- ════════════════════════════════════════════ -->
+<section class="slide dark" id="s11">
+  <div style="max-width:1000px;">
+    <span class="tag" style="color:var(--yl);">AI Training Programs</span>
+    <h2>Technology is useless if your people can't use it.</h2>
+    <p class="sub-light" style="margin-bottom:40px;">We train every level of your organization. Three tiers. Customized for financial services.</p>
+
+    <div class="g3">
+      <div class="card" style="padding:32px;">
+        <div style="font-size:32px;margin-bottom:12px;">&#x1F451;</div>
+        <h4 style="color:var(--yl);">C-Suite Workshop</h4>
+        <p style="font-family:var(--fm);font-size:13px;color:var(--cy);margin-bottom:12px;">2 days | $25K-50K</p>
+        <p style="color:var(--nm);font-size:13px;">AI opportunity mapping, ROI frameworks, risk assessment, competitive positioning, 90-day transformation roadmap. Hands-on demos with your data.</p>
+        <p style="color:var(--nm);font-size:12px;margin-top:12px;font-style:italic;">For: CEO, CTO, CFO, COO, CRO</p>
+      </div>
+      <div class="card" style="padding:32px;">
+        <div style="font-size:32px;margin-bottom:12px;">&#x1F4CA;</div>
+        <h4 style="color:var(--cy);">Manager Program</h4>
+        <p style="font-family:var(--fm);font-size:13px;color:var(--cy);margin-bottom:12px;">4 weeks | $15K-35K/cohort</p>
+        <p style="color:var(--nm);font-size:13px;">Identifying automation opportunities, managing AI projects, change management, measuring ROI, working with agents day-to-day.</p>
+        <p style="color:var(--nm);font-size:12px;margin-top:12px;font-style:italic;">For: VPs, Directors, Managers</p>
+      </div>
+      <div class="card" style="padding:32px;">
+        <div style="font-size:32px;margin-bottom:12px;">&#x1F4BB;</div>
+        <h4 style="color:var(--ok);">Staff Bootcamp</h4>
+        <p style="font-family:var(--fm);font-size:13px;color:var(--cy);margin-bottom:12px;">2 weeks | $8K-20K/cohort</p>
+        <p style="color:var(--nm);font-size:13px;">Daily AI tools, prompt engineering for financial services, workflow automation basics, security & compliance when using AI.</p>
+        <p style="color:var(--nm);font-size:12px;margin-top:12px;font-style:italic;">For: Analysts, Officers, Coordinators</p>
+      </div>
+    </div>
+
+    <div style="background:rgba(123,47,247,0.08);border:1px solid rgba(123,47,247,0.2);border-radius:12px;padding:20px;margin-top:24px;">
+      <p style="color:var(--cy);font-size:14px;"><strong>The flywheel:</strong> A $25K C-suite workshop gives us 2 days with every decision-maker. By the end, they see exactly which agents they need. Workshop-to-deployment conversion: <strong style="color:var(--ok);">65%+</strong>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- SLIDE 12: YOUR TEAM — WHO WE SERVE          -->
+<!-- ════════════════════════════════════════════ -->
+<section class="slide light" id="s12">
+  <div style="max-width:1000px;">
+    <span class="tag" style="color:var(--uv);">Who We Serve</span>
+    <h2 style="color:var(--mn);">Built for financial institutions. US + LATAM.</h2>
+
+    <div class="g2" style="margin-top:32px;">
+      <div class="card-light">
+        <h4 style="color:var(--uv);">Credit Unions & Community Banks</h4>
+        <p style="color:var(--nd);font-size:14px;">~5,000 in the US. Under-resourced for AI. We become their AI department. Entry: dispute agents or C-suite workshop.</p>
+        <p style="font-family:var(--fm);font-size:13px;color:var(--uv);margin-top:12px;">$60K-180K annual contract</p>
+      </div>
+      <div class="card-light">
+        <h4 style="color:var(--pk);">Fintechs & Neobanks</h4>
+        <p style="color:var(--nd);font-size:14px;">Chime, Current, Varo, Nubank, Payphone. Tech-forward but drowning in manual ops. Entry: care agents + ops automation.</p>
+        <p style="font-family:var(--fm);font-size:13px;color:var(--pk);margin-top:12px;">$120K-600K annual contract</p>
+      </div>
+      <div class="card-light">
+        <h4 style="color:var(--cy);">Mid-Market Merchants</h4>
+        <p style="color:var(--nd);font-size:14px;">$10M-500M revenue e-commerce. Losing money on chargebacks. Entry: dispute agents on success-fee basis.</p>
+        <p style="font-family:var(--fm);font-size:13px;color:var(--cy);margin-top:12px;">$36K-240K annual contract</p>
+      </div>
+      <div class="card-light">
+        <h4 style="color:var(--yl);">Regional & National Banks</h4>
+        <p style="color:var(--nd);font-size:14px;">Top 50 US + major LATAM banks. Full AI transformation engagements. Entry: C-suite training, then full deployment.</p>
+        <p style="font-family:var(--fm);font-size:13px;color:var(--yl);margin-top:12px;">$600K-6M annual contract</p>
+      </div>
+    </div>
+
+    <div style="background:#fff;border:1px solid #E8E2F8;border-radius:12px;padding:20px;margin-top:24px;">
+      <p style="color:var(--uv);font-size:14px;"><strong>LATAM advantage:</strong> We're native. Bilingual. Deep fintech relationships across Ecuador, Colombia, Mexico, Argentina. First-mover in a market where AI adoption is 2-3 years behind the US. Competitors (Chargeflow, Justt) are US/Israel-only and don't speak Spanish.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- SLIDE 13: THE TEAM                          -->
+<!-- ════════════════════════════════════════════ -->
+<section class="slide dark" id="s13">
+  <div class="orb orb-1"></div>
+  <div style="position:relative;z-index:1;max-width:1000px;">
+    <span class="tag" style="color:var(--pk);">The Team</span>
+    <h2>We didn't read about fintech.<br>We built it.</h2>
+    <p class="sub-light" style="margin-bottom:40px;">$3B+ in money movement. 1.2M accounts. 70+ compliance team. 50+ state licenses. 18 countries. We've been inside the machine.</p>
+
+    <div class="g2">
+      <div class="card" style="padding:36px;">
+        <div class="team-avatar" style="background:var(--gp);">VI</div>
+        <div class="team-name" style="color:#fff;">Val Infante</div>
+        <div class="team-role">Co-Founder & CEO</div>
+        <div class="team-stat"><strong style="color:#fff;">MyBambu:</strong> Co-founded. 1.2M accounts, $3B+ money moved</div>
+        <div class="team-stat"><strong style="color:#fff;">Payphone:</strong> CGO. $309M TPV, 700K+ users</div>
+        <div class="team-stat"><strong style="color:#fff;">$35 CAC</strong> in an industry avg of $150-300</div>
+        <div class="team-stat"><strong style="color:#fff;">$5M+</strong> in AI automation savings delivered</div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:12px;justify-content:center;">
+          <span style="background:rgba(255,45,135,0.1);color:var(--pk);padding:3px 10px;border-radius:12px;font-size:11px;">Forbes 2024</span>
+          <span style="background:rgba(255,45,135,0.1);color:var(--pk);padding:3px 10px;border-radius:12px;font-size:11px;">40 Under 40</span>
+          <span style="background:rgba(255,45,135,0.1);color:var(--pk);padding:3px 10px;border-radius:12px;font-size:11px;">American Banker</span>
+        </div>
+      </div>
+      <div class="card" style="padding:36px;">
+        <div class="team-avatar" style="background:var(--ga);">PI</div>
+        <div class="team-name" style="color:#fff;">Pedro Infante</div>
+        <div class="team-role">Co-Founder & CCO</div>
+        <div class="team-stat"><strong style="color:#fff;">Bambu Systems:</strong> CCO. 70+ compliance team</div>
+        <div class="team-stat"><strong style="color:#fff;">$10M+</strong> in regulatory fines mitigated</div>
+        <div class="team-stat"><strong style="color:#fff;">ACFCS:</strong> Head of LATAM. 0 to 73 countries</div>
+        <div class="team-stat"><strong style="color:#fff;">50+ state</strong> Money Transmitter Licenses</div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:12px;justify-content:center;">
+          <span style="background:rgba(0,229,255,0.1);color:var(--cy);padding:3px 10px;border-radius:12px;font-size:11px;">BSA/AML</span>
+          <span style="background:rgba(0,229,255,0.1);color:var(--cy);padding:3px 10px;border-radius:12px;font-size:11px;">FATCA/FCPA</span>
+          <span style="background:rgba(0,229,255,0.1);color:var(--cy);padding:3px 10px;border-radius:12px;font-size:11px;">56+ Conferences</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="background:var(--gp);border-radius:14px;padding:24px;margin-top:28px;text-align:center;">
+      <p style="font-family:var(--fd);font-weight:700;font-size:16px;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,0.2);">Operator + Regulator. The rarest combination in fintech AI. We build it AND we know how to keep it compliant.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- SLIDE 14: CTA / CONTACT                     -->
+<!-- ════════════════════════════════════════════ -->
+<section class="slide dark" id="s14" style="text-align:center;">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div style="position:relative;z-index:1;">
+    <h1 class="gradient-text" style="font-size:clamp(48px,6vw,72px);margin-bottom:20px;">AXIOM</h1>
+    <p style="font-family:var(--fd);font-weight:600;font-size:20px;color:var(--cy);margin-bottom:32px;letter-spacing:2px;">Build. Deploy. Train.</p>
+    <h2 style="font-size:clamp(22px,3vw,36px);color:#fff;max-width:700px;margin:0 auto 16px;">Every financial institution will run on AI agents within 5 years.</h2>
+    <p class="sub-light" style="max-width:600px;margin:0 auto 48px;">The question is: who builds them?<br><strong style="color:#fff;">We've already started.</strong></p>
+
+    <div style="display:flex;gap:48px;justify-content:center;margin-bottom:48px;flex-wrap:wrap;">
+      <div>
+        <div style="font-family:var(--fd);font-weight:700;color:#fff;font-size:16px;">Val Infante</div>
+        <div style="color:var(--cy);font-size:14px;">Co-Founder & CEO</div>
+        <div style="font-family:var(--fm);font-size:14px;color:var(--nm);margin-top:4px;">val@axiom.ai</div>
+      </div>
+      <div>
+        <div style="font-family:var(--fd);font-weight:700;color:#fff;font-size:16px;">Pedro Infante</div>
+        <div style="color:var(--cy);font-size:14px;">Co-Founder & CCO</div>
+        <div style="font-family:var(--fm);font-size:14px;color:var(--nm);margin-top:4px;">pedro@axiom.ai</div>
+      </div>
+    </div>
+
+    <a class="btn btn-primary" href="mailto:val@axiom.ai" style="font-size:16px;padding:18px 48px;">Let's Talk</a>
+    <p style="color:var(--nm);font-size:13px;margin-top:24px;">axiom.ai</p>
+  </div>
+</section>
+
+<!-- JS: KEYBOARD NAV + DOTS -->
+<script>
+(function(){
+  const slides = document.querySelectorAll('.slide');
+  const dots = document.getElementById('navDots');
+
+  // Create dots
+  slides.forEach((s,i) => {
+    const a = document.createElement('a');
+    a.href = '#' + s.id;
+    a.title = 'Slide ' + (i+1);
+    if(i===0) a.classList.add('active');
+    dots.appendChild(a);
+  });
+
+  // Update active dot on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if(e.isIntersecting){
+        const idx = Array.from(slides).indexOf(e.target);
+        dots.querySelectorAll('a').forEach((d,i) => {
+          d.classList.toggle('active', i===idx);
+          // Adjust dot color for light slides
+          const isLight = e.target.classList.contains('light') || e.target.classList.contains('tinted');
+          if(isLight){
+            d.style.background = d.classList.contains('active') ? '#7B2FF7' : 'rgba(0,0,0,0.15)';
+          } else {
+            d.style.background = d.classList.contains('active') ? '#7B2FF7' : 'rgba(255,255,255,0.25)';
+          }
+        });
+      }
+    });
+  }, {threshold:0.5});
+
+  slides.forEach(s => observer.observe(s));
+
+  // Keyboard nav
+  document.addEventListener('keydown', (e) => {
+    if(e.key === 'ArrowDown' || e.key === 'ArrowRight'){
+      e.preventDefault();
+      const active = Array.from(dots.querySelectorAll('a')).findIndex(d => d.classList.contains('active'));
+      if(active < slides.length - 1) slides[active+1].scrollIntoView({behavior:'smooth'});
+    }
+    if(e.key === 'ArrowUp' || e.key === 'ArrowLeft'){
+      e.preventDefault();
+      const active = Array.from(dots.querySelectorAll('a')).findIndex(d => d.classList.contains('active'));
+      if(active > 0) slides[active-1].scrollIntoView({behavior:'smooth'});
+    }
+  });
+})();
+</script>
+
+</body>
+</html>
